@@ -66,14 +66,20 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
             ActionButton(
               color: Colors.lightBlueAccent,
-              label: Text('Log In'),
+              label: Text(
+                'Log In',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
                 Navigator.pushNamed(context, LoginScreen.route);
               },
             ),
             ActionButton(
               color: Colors.blueAccent,
-              label: Text('Register'),
+              label: Text(
+                'Register',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
                 Navigator.pushNamed(context, RegistrationScreen.route);
               },
