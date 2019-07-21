@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widgets/action_button.dart';
 import '../constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'chat_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String route = '/login';
@@ -9,6 +11,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
+  String email;
+  String password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(
               keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
-                //Do something with the user input.
+                email = value;
               },
               decoration:
                   kTextFiledDecoration.copyWith(hintText: 'Enter your Email'),
@@ -43,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(
               obscureText: true,
               onChanged: (value) {
-                //Do something with the user input.
+                password = value;
               },
               decoration: kTextFiledDecoration.copyWith(
                   hintText: 'Enter your password'),
@@ -57,7 +62,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 'Log In',
                 style: TextStyle(color: Colors.white),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                try {
+                  final user = await _auth.signInWithEmailAndPassword(
+                      email: email, password: password);
+                  if (user != null) {
+                    Navigator.pushNamed(context, ChatScreen.route);
+                  }
+                } catch (e) {
+                  print(e);
+                }
+              },
             ),
           ],
         ),
