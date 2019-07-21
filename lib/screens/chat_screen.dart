@@ -57,6 +57,22 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            StreamBuilder<QuerySnapshot>(
+              stream: _store.collection('messages').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final messages = snapshot.data.documents;
+                  List<Text> list = [];
+                  for (var message in messages) {
+                    final messageText = message.data['message'];
+                    final sender = message.data['sender'];
+                    list.add(Text('$messageText from $sender'));
+                  }
+                  return Column(children: list);
+                }
+                return Column(children: <Widget>[]);
+              },
+            ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
