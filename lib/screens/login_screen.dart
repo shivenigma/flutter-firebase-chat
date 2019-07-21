@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../widgets/action_button.dart';
 import '../constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'chat_screen.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String route = '/login';
