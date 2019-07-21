@@ -79,7 +79,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ActionButton(
               color: Colors.blueAccent,
               label: Text('Register'),
-              callback: () {},
+              onPressed: () {},
             ),
           ],
         ),

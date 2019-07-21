@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ActionButton(
               color: Colors.lightBlueAccent,
               label: Text('Log In'),
-              callback: () {},
+              onPressed: () {},
             ),
           ],
         ),
