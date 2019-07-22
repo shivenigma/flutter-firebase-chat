@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final _store = Firestore.instance;
+FirebaseUser user;
 
 class ChatScreen extends StatefulWidget {
   static const String route = '/chat';
@@ -15,13 +16,11 @@ class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
   final messageTextController = TextEditingController();
   String message;
-  FirebaseUser user;
   void getCurrentUser() async {
     try {
       final currentUser = await _auth.currentUser();
       if (currentUser != null) {
         user = currentUser;
-        print(user);
       }
     } catch (e) {
       print(e);
@@ -120,9 +119,11 @@ class MessageStream extends StatelessWidget {
         for (var message in messages) {
           final messageText = message.data['message'];
           final sender = message.data['sender'];
+          final currentUser = user.uid;
           list.add(MessageBubble(
             message: messageText,
             sender: sender,
+            isMe: sender == currentUser,
           ));
         }
         return Expanded(
@@ -137,29 +138,37 @@ class MessageStream extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble({@required this.message, this.sender});
+  MessageBubble({@required this.message, this.sender, this.isMe});
   final String message;
   final String sender;
+  final bool isMe;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             sender,
             style: TextStyle(fontSize: 12.0, color: Colors.black54),
           ),
           Material(
-            borderRadius: BorderRadius.circular(30.0),
-            color: Colors.lightBlueAccent,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0),
+              topLeft: isMe ? Radius.circular(30.0) : Radius.zero,
+              topRight: isMe ? Radius.zero : Radius.circular(30.0),
+            ),
+            elevation: 5.0,
+            color: isMe ? Colors.lightBlueAccent : Colors.white,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
                 '$message',
-                style: TextStyle(fontSize: 15.0),
+                style: TextStyle(fontSize: 15.0,
+                color: isMe ? Colors.white : Colors.black54),
               ),
             ),
           ),
