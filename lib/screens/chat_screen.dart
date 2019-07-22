@@ -137,9 +137,9 @@ class MessageStream extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  String message;
-  String sender;
   MessageBubble({@required this.message, this.sender});
+  final String message;
+  final String sender;
   @override
   Widget build(BuildContext context) {
     return Padding(
