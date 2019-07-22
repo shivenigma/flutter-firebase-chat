@@ -4,6 +4,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../widgets/action_button.dart';
 import '../constants.dart';
 import 'chat_screen.dart';
+import 'profile_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String route = '/login';
@@ -76,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
                     if (user != null) {
-                      Navigator.pushNamed(context, ChatScreen.route);
+                      Navigator.pushNamed(context, ProfileScreen.route);
                     }
                   } catch (e) {
                     print(e);
