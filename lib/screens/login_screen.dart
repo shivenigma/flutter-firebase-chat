@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
                     if (user != null) {
-                      Navigator.pushNamed(context, ProfileScreen.route);
+                      Navigator.pushNamed(context, ChatScreen.route);
                     }
                   } catch (e) {
                     print(e);

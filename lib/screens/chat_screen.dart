@@ -78,7 +78,13 @@ class _ChatScreenState extends State<ChatScreen> {
                       try {
                         final newMessage = await _store
                             .collection('messages')
-                            .add({'sender': user.uid, 'message': message});
+                            .add({
+                              'sender': {
+                                'id': user.uid,
+                                'name': user.displayName,
+                              },
+                              'message': message
+                            });
                         if (newMessage != null) {
                           messageTextController.clear();
                         }
@@ -117,13 +123,14 @@ class MessageStream extends StatelessWidget {
         final messages = snapshot.data.documents.reversed;
         List<MessageBubble> list = [];
         for (var message in messages) {
+          print(message.data['sender']['name']);
           final messageText = message.data['message'];
           final sender = message.data['sender'];
           final currentUser = user.uid;
           list.add(MessageBubble(
             message: messageText,
-            sender: sender,
-            isMe: sender == currentUser,
+            sender: sender['name'] != null ? sender['name'] : '',
+            isMe: sender['id'] == currentUser,
           ));
         }
         return Expanded(
