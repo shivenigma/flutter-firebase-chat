@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'chat_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String route = '/profile';
@@ -96,11 +96,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 16.0,
             ),
             RaisedButton(
-              onPressed: () {
-                setState(() {
-                  this.isEditName = false;
-                  this.userName = name.text;
-                });
+              onPressed: () async{
+                try {
+                  setState(() {
+                    this.isEditName = false;
+                    this.userName = name.text;
+                  });
+                  UserUpdateInfo update = UserUpdateInfo();
+                  update.displayName = name.text;
+                  await currentUser.updateProfile(update);
+                  Navigator.pushNamed(context, ChatScreen.route);
+                } catch(e) {
+                  print(e);
+                }
               },
               child: Text('Save'),
             )
