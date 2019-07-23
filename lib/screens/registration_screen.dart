@@ -42,6 +42,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               TextField(
                 keyboardType: TextInputType.emailAddress,
+                textCapitalization: TextCapitalization.none,
                 onChanged: (value) {
                   email = value;
                 },
@@ -53,6 +54,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               TextField(
                 obscureText: true,
+                textCapitalization: TextCapitalization.none,
                 onChanged: (value) {
                   password = value;
                 },

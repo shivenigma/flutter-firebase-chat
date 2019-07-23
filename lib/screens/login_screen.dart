@@ -43,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextField(
                 keyboardType: TextInputType.emailAddress,
+                textCapitalization: TextCapitalization.none,
                 onChanged: (value) {
                   email = value;
                 },
@@ -54,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextField(
                 obscureText: true,
+                textCapitalization: TextCapitalization.none,
                 onChanged: (value) {
                   password = value;
                 },
