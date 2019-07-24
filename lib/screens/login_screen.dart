@@ -81,9 +81,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           email: email, password: password);
                       if (user != null) {
                         if(user.displayName != null) {
-                          Navigator.pushNamed(context, ChatScreen.route);
+                          Navigator.pushNamedAndRemoveUntil(context, ChatScreen.route,(_) => false);
                         } else {
-                          Navigator.pushNamed(context, ProfileScreen.route);
+                          Navigator.pushNamedAndRemoveUntil(context, ProfileScreen.route, (_) => false);
                         }
                       }
                     } catch (e) {
