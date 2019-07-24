@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'chat_screen.dart';
+import '../constants.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String route = '/profile';
@@ -14,6 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isEditName = false;
   TextEditingController name = TextEditingController();
   String userName = ' ';
+  String gender;
   void getCurrentUser() async {
     try {
       final user = await _auth.currentUser();
@@ -93,24 +95,73 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             SizedBox(
+              height: 8.0,
+            ),
+            Visibility(
+              visible: isEditName,
+              child: Column(
+                children: <Widget>[
+                  RadioListTile<String>(
+                    title: const Text('Male', style: kRadioButtonLabelStyle,),
+                    value: 'male',
+                    groupValue: gender,
+                    onChanged: (String value) {
+                      setState(() { gender = value; });
+                      },
+                  ),
+                  RadioListTile<String>(
+                    title: const Text('Feale', style: kRadioButtonLabelStyle),
+                    value: 'female',
+                    groupValue: gender,
+                    onChanged: (String value) {
+                      setState(() { gender = value; });
+                    },
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
               height: 16.0,
             ),
-            RaisedButton(
-              onPressed: () async{
-                try {
-                  setState(() {
-                    this.isEditName = false;
-                    this.userName = name.text;
-                  });
-                  UserUpdateInfo update = UserUpdateInfo();
-                  update.displayName = name.text;
-                  await currentUser.updateProfile(update);
-                  Navigator.pushNamed(context, ChatScreen.route);
-                } catch(e) {
-                  print(e);
-                }
-              },
-              child: Text('Save'),
+            Row(
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: () async{
+                    try {
+                      setState(() {
+                        this.isEditName = false;
+                        this.userName = name.text;
+                      });
+                      UserUpdateInfo update = UserUpdateInfo();
+                      update.displayName = name.text;
+                      await currentUser.updateProfile(update);
+                      Navigator.pushNamed(context, ChatScreen.route);
+                    } catch(e) {
+                      print(e);
+                    }
+                  },
+                  child: Text('Save'),
+
+                ),
+                SizedBox(width: 5),
+                RaisedButton(
+                  onPressed: () async{
+                    try {
+                      setState(() {
+                        this.isEditName = true;
+                      });
+                      UserUpdateInfo update = UserUpdateInfo();
+                      update.displayName = name.text;
+                      await currentUser.updateProfile(update);
+                      Navigator.pushNamed(context, ChatScreen.route);
+                    } catch(e) {
+                      print(e);
+                    }
+                  },
+                  child: Text('Cancel'),
+
+                ),
+              ],
             )
           ],
         ),
