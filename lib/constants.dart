@@ -33,3 +33,7 @@ const kTextFiledDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+
+const kRadioButtonLabelStyle = TextStyle(
+  fontSize: 20.0
+);
