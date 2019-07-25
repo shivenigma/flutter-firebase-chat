@@ -110,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                   ),
                   RadioListTile<String>(
-                    title: const Text('Feale', style: kRadioButtonLabelStyle),
+                    title: const Text('Female', style: kRadioButtonLabelStyle),
                     value: 'female',
                     groupValue: gender,
                     onChanged: (String value) {
@@ -124,6 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 16.0,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 RaisedButton(
                   onPressed: () async{
@@ -143,20 +144,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Text('Save'),
 
                 ),
-                SizedBox(width: 5),
+                SizedBox(width: 15),
                 RaisedButton(
                   onPressed: () async{
-                    try {
-                      setState(() {
-                        this.isEditName = true;
-                      });
-                      UserUpdateInfo update = UserUpdateInfo();
-                      update.displayName = name.text;
-                      await currentUser.updateProfile(update);
-                      Navigator.pushNamed(context, ChatScreen.route);
-                    } catch(e) {
-                      print(e);
-                    }
+                    setState(() {
+                      this.isEditName = false;
+                    });
                   },
                   child: Text('Cancel'),
 
