@@ -44,15 +44,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            CircleAvatar(
-              radius: 80.0,
-              backgroundColor: Colors.grey,
+            Flexible(
+              child: CircleAvatar(
+                radius: 80.0,
+                backgroundColor: Colors.grey,
 
-              child: Text(
-                userName[0].toUpperCase(),
-                style: TextStyle(
-                  fontSize: 80.0,
-                  color: Colors.black,
+                child: Text(
+                  userName[0].toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 80.0,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
@@ -81,12 +83,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Visibility(
               visible: isEditName,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(18.0),
                 child: Row(
                   children: <Widget>[
                     Expanded(
                       child: TextField(
                         textCapitalization: TextCapitalization.sentences,
+                        style: TextStyle(fontSize: 25.0),
+                        textAlign: TextAlign.center,
                         controller: name,
                       ),
                     ),
@@ -99,9 +103,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Visibility(
               visible: isEditName,
-              child: Column(
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  RadioListTile<String>(
+                  Column(
+                    children: <Widget>[
+                      Flexible(child: Image.asset('images/icons8-user-male-50.png')),
+                      Radio(
+                        groupValue: gender,
+                        value: 'male',
+                      )
+                    ],
+                    mainAxisSize: MainAxisSize.min,
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Flexible(child: Image.asset('images/icons8-female-user-50.png')),
+                      Radio(
+                        groupValue: gender,
+                        value: 'female',
+                      )
+                    ],
+                    mainAxisSize: MainAxisSize.min,
+                  ),
+                  /*RadioListTile<String>(
                     title: const Text('Male', style: kRadioButtonLabelStyle,),
                     value: 'male',
                     groupValue: gender,
@@ -116,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onChanged: (String value) {
                       setState(() { gender = value; });
                     },
-                  )
+                  )*/
                 ],
               ),
             ),
